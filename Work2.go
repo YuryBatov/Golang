@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	//"io/ioutil"
 	//"strconv"
 	//"strings"
@@ -10,19 +11,13 @@ import (
 //func readfile()
 
 func main() {
-	var files_names string
+	var word string
 	files_name := make([]string, 0, 10)
-	var n int
-	fmt.Println("Введите количество файлов: ")
-	fmt.Scan(&n)
-	//n := 10
-	fmt.Printf("Введите названия этих файлов:")
-	for i := 1; i <= n; i++ {
-		fmt.Scan(&files_names)
-		files_name = append(files_name, files_names)
+	files_name = os.Args[1:]
 
-	}
 	fmt.Printf("%s", files_name)
+	fmt.Scan(&word)
+	fmt.Printf("%s", word)
 	//files_name = append(files_name, "12")
 	//fmt.Println("Введите названия файлов")
 	//fmt.Printf("%s %d %d", files_name, len(files_name), cap(files_name))
