@@ -2,39 +2,59 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
-	//"io/ioutil"
-	//"strconv"
-	//"strings"
+	"strings"
 )
 
-//func readfile()
+type files struct {
+	name     string
+	quantity int
+}
 
-func main() {
-	var word string
-	files_name := make([]string, 0, 10)
-	files_name = os.Args[1:]
-
-	fmt.Printf("%s", files_name)
-	fmt.Scan(&word)
-	fmt.Printf("%s", word)
-	//files_name = append(files_name, "12")
-	//fmt.Println("Введите названия файлов")
-	//fmt.Printf("%s %d %d", files_name, len(files_name), cap(files_name))
-	/**data, err := ioutil.ReadFile("test.txt")
+func countword(str []string, word []string) int {
+	var n int
+	for i := range word {
+		for j := range str {
+			if word[i] == str[j] {
+				n++
+			}
+		}
+	}
+	return n
+}
+func readfile(files_name string) []string {
+	var str1 []string
+	data, err := ioutil.ReadFile(files_name)
 	if err != nil {
 		fmt.Println("Ошибка чтения файла")
 		fmt.Println(err)
 	}
 	str := string(data)
-	str1 := strings.Split(str, " ")
-	var n []int
-	n = make([]int, len(str1))
-	for i := 0; i < len(str1); i++ {
-		n[i], err = strconv.Atoi(str1[i])
+	str1 = strings.Split(str, " ")
+	return str1
+}
+
+func main() {
+	var word string
+	var words []string
+	var data files
+	var data1 []files
+	files_name := make([]string, 0, 10)
+	files_name = os.Args[1:]
+	fmt.Printf("%s", files_name)
+	fmt.Printf("\n%s", "Введите слово: ")
+	fmt.Scan(&word)
+	words = strings.Split(word, " ")
+	for i := range files_name {
+		data.name = files_name[i]
+		str1 := readfile(files_name[i])
+		data.quantity = countword(str1, words)
+		data1 = append(data1, data)
 	}
-	if err != nil {
-		fmt.Println("Ошибка чего то там")
-		fmt.Println(err)
-	}*/
+	for i := range files_name {
+
+	}
+	//fmt.Printf("%s ", str1)
+
 }
