@@ -1,9 +1,8 @@
-package work1
+package main
 
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -13,7 +12,7 @@ func main() {
 	if err != nil {
 		fmt.Println("Ошибка чтения файла")
 		fmt.Println(err)
-		os.Exit
+		//os.Exit
 	}
 	str := string(data)
 	str1 := strings.Split(str, " ")
@@ -22,9 +21,9 @@ func main() {
 	for i := 0; i < len(str1); i++ {
 		n[i], err = strconv.Atoi(str1[i])
 		if err != nil {
-			fmt.Println("Ошибка чего то там")
+			fmt.Println("Ошибка")
 			fmt.Println(err)
-			os.Exit
+			//os.Exit
 		}
 	}
 	//n, err := strconv.Atoi(str1)

@@ -15,6 +15,11 @@ type files struct {
 	quantity int
 }
 
+/**type revers_index struct{
+	name_word string
+	name_files []string
+}*/
+
 func sort(data1 []files, n int) []files {
 	for i := 1; i < n; i++ {
 		for j := i; j > 0 && data1[j-1].quantity < data1[j].quantity; j-- {
