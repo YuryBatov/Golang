@@ -6,53 +6,21 @@ import (
 	"os"
 	"strings"
 
+	"./files"
 	"./readfile"
+	"./revers_index"
 )
 
-type files struct {
-	name     string
-	quantity int
-}
-
-func sort(m map[string][]files, str string) map[string][]files {
-	for i := range m[str] {
-		for j := i; j > 0 && m[str][j-1].quantity < m[str][j].quantity; j-- {
-			m[str][j-1], m[str][j] = m[str][j], m[str][j-1]
+func sort2(m files.Allfiles) {
+	for i := range m {
+		for j := i; j > 0 && m[j-1].Quantity < m[j].Quantity; j-- {
+			m[j-1], m[j] = m[j], m[j-1]
 		}
 	}
-	return m
-}
-func revers_ind(str []string, files_name string, m map[string][]files) map[string][]files {
-	//var data []files
-	var data1 files
-	data1.name = files_name
-	data1.quantity = 1
-	//var k int
-	for i := range str {
-		k := 0
-		if m[str[i]] != nil {
-			for j := range m[str[i]] {
-				if m[str[i]][j].name == files_name {
-					m[str[i]][j].quantity++
-					k++
-				}
-			}
-			if k == 0 {
-				m[str[i]] = append(m[str[i]], data1)
-			}
-		}
-		if m[str[i]] == nil {
-			m[str[i]] = append(m[str[i]], data1)
-		}
-		k = 0
-		m = sort(m, str[i])
-	}
-
-	return m
 }
 
 func main() {
-	m := make(map[string][]files)
+	m := make(map[string]files.Allfiles)
 	var word string
 	var words []string
 	files_name := make([]string, 0, 10)
@@ -60,15 +28,34 @@ func main() {
 	fmt.Printf("\n%s", "Введите слово: ")
 	for i := range files_name {
 		str1 := readfile.Readfile(files_name[i])
-		m = revers_ind(str1, files_name[i], m)
+		m = revers_index.Revers_index(str1, files_name[i], m)
 	}
 	buf := bufio.NewScanner(os.Stdin)
 	buf.Scan()
 	word = buf.Text()
 	words = strings.Split(word, " ")
+	var m_1 files.Allfiles
+	var m_11 files.Files
 	for i := range words {
+		l := 0
 		for j := range m[words[i]] {
-			fmt.Printf("%s: совпадений %d\n", m[words[i]][j].name, m[words[i]][j].quantity)
+			for k := range m_1 {
+				if m[words[i]][j].Name == m_1[k].Name {
+					m_1[k].Quantity = m_1[k].Quantity + m[words[i]][j].Quantity
+					l++
+				}
+			}
+			if l == 0 {
+				m_11.Name = m[words[i]][j].Name
+				m_11.Quantity = m[words[i]][j].Quantity
+				m_1 = append(m_1, m_11)
+			}
+			l = 0
 		}
 	}
+	sort2(m_1)
+	for i := range m_1 {
+		fmt.Printf("%s : %d совпадений\n", m_1[i].Name, m_1[i].Quantity)
+	}
+	//m_1 = sort.Ints()
 }
