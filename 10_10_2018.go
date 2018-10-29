@@ -21,7 +21,7 @@ type Vertex struct {
 	Y int
 }
 
-func main() {
+func main1() {
 	/**names := []string{"1", "2", "45"}
 	//a := "n"
 	// := &a
